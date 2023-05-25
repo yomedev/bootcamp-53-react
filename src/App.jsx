@@ -1,18 +1,14 @@
-import { Link } from "./components/Link";
-import { Profile } from "./components/Profile";
+import { Link } from "./components/Link/Link";
+import { ProfilesList } from "./components/ProfilesList";
+import profilesJson from './data/users.json'
+
 
 export const App = () => {
+  console.log("App");
   return (
     <>
-      <Profile name="Bob" isOnline />
-      <Profile name="Jhon" />
-      <Link data={{ name: "Bob" }}>Home</Link>
-      <br />
-      <Link href="/contacts">Contacts</Link>
-      <br />
-      <Link href="/about">About</Link>
+    <Link>Link</Link>
+      <ProfilesList profiles={profilesJson} title='Profiles' />
     </>
   );
 };
-
-// Link({href: "/"})
