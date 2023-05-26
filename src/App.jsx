@@ -1,14 +1,19 @@
-import { Link } from "./components/Link/Link";
-import { ProfilesList } from "./components/ProfilesList";
-import profilesJson from './data/users.json'
-
+// import { Banner } from "./components/Banner";
+import { Counter } from "./components/Counter";
+import { Header, Layout } from "./components/Layout";
+// import { UsersList } from "./components/Users";
 
 export const App = () => {
-  console.log("App");
   return (
-    <>
-    <Link>Link</Link>
-      <ProfilesList profiles={profilesJson} title='Profiles' />
-    </>
+    <Layout>
+      <Header title="Hello world!" />
+
+      <Counter defaultValue={10} />
+      {/* <Banner /> */}
+      {/* <UsersList /> */}
+    </Layout>
   );
 };
+
+// const counter = new Counter()
+// counter.render()
