@@ -1,7 +1,7 @@
 import { PropTypes } from 'prop-types';
 
-export const UsersItem = ({ user }) => {
-  const { name, email, bio, skills, isOpenToWork } = user;
+export const UsersItem = ({ user, onDeleteUser }) => {
+  const { id, name, email, bio, skills, isOpenToWork } = user;
 
   return (
     <div className="card my-3">
@@ -23,7 +23,7 @@ export const UsersItem = ({ user }) => {
         </div>
 
         <div className="d-flex">
-          <button type="button" className="card-link btn-link">
+          <button type="button" className="card-link btn-link" onClick={() => onDeleteUser(id)}>
             Delete
           </button>
         </div>
