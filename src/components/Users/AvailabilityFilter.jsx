@@ -1,3 +1,5 @@
+
+
 export const AvailabilityFilter = ({onChangeAvailability, isChecked}) => {
   return (
     <fieldset className="me-5">
