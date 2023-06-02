@@ -1,4 +1,6 @@
 import { Component } from "react";
+import { Button } from "../Button/Button";
+import {IoPlayOutline, IoStopOutline} from 'react-icons/io5'
 
 const ONE_SECOND = 1000;
 
@@ -36,9 +38,19 @@ export class TimerModal extends Component {
 
   render() {
     return (
-      <div className="d-flex flex-column justify-content-center align-items-center p-5 text-bg-dark rounded-3 mb-5">
-        <h2 className="h1 m-5">{this.formatTime()}</h2>
-      </div>
+      <>
+        <p className="h1 mb-4 text-center">{this.formatTime()}</p>
+  
+        <div className="d-flex justify-content-center">
+          <Button className="btn-primary btn-lg mx-2">
+            <IoPlayOutline />
+          </Button>
+  
+          <Button className="btn-danger btn-lg mx-2">
+            <IoStopOutline />
+          </Button>
+        </div>
+      </>
     );
   }
 }
