@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 
 import { Button } from '../../../Button';
+import { AuthContext } from '../../../../context/AuthContext';
 
 export const Login = () => {
   const [isPassword, setIsPassword] = useState(true);
   const toggle = () => setIsPassword(prev => !prev);
+
+   const {login} = useContext(AuthContext)
+
+   const handleSubmit = () => {
+      login('Bob', '123')
+   }
 
   return (
     <>
@@ -23,7 +30,7 @@ export const Login = () => {
         </Button>
       </div>
 
-      <Button>Log In</Button>
+      <Button onClick={handleSubmit}>Log In</Button>
     </>
   );
 };

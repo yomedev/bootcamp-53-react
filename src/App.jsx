@@ -2,22 +2,32 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { Layout } from "./components/Layout";
-import { Counter } from "./components/Counter";
-// import { useState } from "react";
-import { LoginForm } from "./components/LoginForm/LoginForm";
+import { AuthContext } from "./context/AuthContext";
+import { useState } from "react";
 
-
+import { Users } from "./components/Users/Users";
 
 export const App = () => {
+  const [isAuth, setIsAuth] = useState(false);
+  const [username, setUsername] = useState('');
 
-  // const [counter, setCounter] = useState(15)
+  const login = (username, password) => {
+    if (password === '123') {
+      setIsAuth(true)
+      setUsername(username)
+      return
+    }
+    alert('Password is incorrect')
+  }
 
   return (
-    <Layout>
-      {/* <button className="btn btn-primary" onClick={() => setCounter(prev => prev + 1)}>{counter}</button> */}
-      <LoginForm />
-      <Counter defaultAndroid={0}  />
-      <ToastContainer />
-    </Layout>
+    <AuthContext.Provider value={{ isAuth, login, username }}>
+      <Layout>
+        {/* <Memo /> */}
+        {/* <Posts /> */}
+        <Users />
+        <ToastContainer />
+      </Layout>
+    </AuthContext.Provider>
   );
 };
