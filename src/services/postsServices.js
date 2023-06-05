@@ -17,7 +17,7 @@ axios.defaults.params = {
 export const getPosts = async (params) => {
   const { data } = await axios.get("everything", {
     params: {
-      q: params?.search ?? "bitcoin",
+      q: params?.search || "bitcoin",
       page: params?.page,
     },
   });
