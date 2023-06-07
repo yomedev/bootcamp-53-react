@@ -1,9 +1,10 @@
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import image from './default_image.png'
 
-import { cutString } from '../../helpers/cut-string';
+import { cutString } from '../../../helpers/cut-string';
 import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 
 export const PostsItem = ({post}) => {
@@ -34,9 +35,9 @@ export const PostsItem = ({post}) => {
               Delete post
             </button>
 
-            <a href={`/posts/${post.url}`} className="btn btn-primary ms-3">
+            <Link to={`/posts/${post.title}`} className="btn btn-primary ms-3">
               Read post
-            </a>
+            </Link>
           </div>}
         </div>
       </div>
