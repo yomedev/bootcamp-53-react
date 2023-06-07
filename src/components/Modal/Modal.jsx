@@ -6,20 +6,20 @@ const modalRoot = document.getElementById("modal-root");
 
 export const Modal = ({ children, onCloseModal }) => {
   useEffect(() => {
+
     const handleKeydown = (event) => {
       if (event.key === "Escape") {
         console.log("Escape");
         onCloseModal();
       }
     };
+
     window.addEventListener("keydown", handleKeydown);
 
-    const clearProcesses = () => {
+    return () => {
       console.log("clearProcesses");
       window.removeEventListener("keydown", handleKeydown);
     };
-
-    return clearProcesses;
   }, [onCloseModal]);
 
   const handleBackdrop = (event) => {
