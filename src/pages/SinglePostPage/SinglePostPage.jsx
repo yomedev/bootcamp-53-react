@@ -4,13 +4,15 @@ import { toast } from "react-toastify";
 
 import { Loader } from "../../components/Loader";
 import { getSingePostService } from "../../services/postsServices";
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useParams, Outlet } from "react-router-dom";
 
 export const SinglePostPage = () => {
-  // const postId = "The Hidden Dangers of the Decentralized Web";
-
-  const {postId} = useParams()
+  const { postId } = useParams();
   console.log(postId);
+
+  const location = useLocation()
+
+  console.log(location.state);
 
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,9 +35,9 @@ export const SinglePostPage = () => {
   return (
     post && (
       <>
-        <a href="/posts" className="btn btn-primary my-3">
+        <Link to={location.state ?? '/posts'} className="btn btn-primary my-3">
           Back
-        </a>
+        </Link>
         <img
           src={post.urlToImage}
           alt={post.title}
@@ -46,7 +48,10 @@ export const SinglePostPage = () => {
 
         <div>{post.description}</div>
 
-        {/* <div dangerouslySetInnerHTML={{ __html: article.content.replace(/\n/g, '<br/>') }} /> */}
+        <Link to={`/posts/${postId}/comments`} state={location.state} className="btn btn-primary my-4">
+          Vew post comments
+        </Link>
+        <Outlet />
       </>
     )
   );

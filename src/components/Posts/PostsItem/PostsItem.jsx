@@ -4,11 +4,14 @@ import image from './default_image.png'
 import { cutString } from '../../../helpers/cut-string';
 import { useContext } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 
 export const PostsItem = ({post}) => {
   const {isAuth} = useContext(AuthContext)
+
+  const location = useLocation()
+
   return (
     <div className="col-12 col-xl-4 col-xxl-4 mb-4">
       <div className="card">
@@ -35,7 +38,7 @@ export const PostsItem = ({post}) => {
               Delete post
             </button>
 
-            <Link to={`/posts/${post.title}`} className="btn btn-primary ms-3">
+            <Link to={`/posts/${post.title}`} state={location} className="btn btn-primary ms-3">
               Read post
             </Link>
           </div>}
