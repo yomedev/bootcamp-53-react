@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 
@@ -15,44 +16,35 @@ const fetchStatus = {
   Error: "error",
 };
 
-const pageLimit = 9;
-
 export const PostsListPage = () => {
   const [posts, setPosts] = useState([]);
   const [status, setStatus] = useState(fetchStatus.Idle);
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+  // const [search, setSearch] = useState("");
+  // const [page, setPage] = useState(1);
 
-  const total = useRef(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const search = searchParams.get("query");
+  const page = searchParams.get("page");
+  
+  const params = Object.fromEntries([...searchParams]);
 
   const fetchPosts = useCallback(async () => {
     setStatus(fetchStatus.Loading);
     try {
       const postsResponse = await getPosts({ page, search });
-      if (page > 1) {
-        setPosts((prev) => [...prev, ...postsResponse.articles]);
-      } else {
-        setPosts(postsResponse.articles);
-      }
+      setPosts(postsResponse.articles);
       setStatus(fetchStatus.Success);
-      total.current = postsResponse.totalResults;
     } catch (err) {
       setStatus(fetchStatus.Error);
     }
-  }, [page, search])
-
+  }, [page, search]);
 
   useEffect(() => {
     fetchPosts();
-  }, [page, search, fetchPosts]);
+  }, [fetchPosts]);
 
-  const handleChangeSearch = (value) => {
-    setSearch(value);
-    setPage(1);
-  };
-
-  const handleNextPage = () => {
-    setPage((prev) => prev + 1);
+  const handleChangePage = (page) => {
+    setSearchParams({ ...params, page });
   };
 
   if (status === fetchStatus.Loading) {
@@ -61,7 +53,7 @@ export const PostsListPage = () => {
 
   return (
     <>
-      <PostsSearch onSubmit={handleChangeSearch} />
+      <PostsSearch />
 
       {status === fetchStatus.Error ? (
         <PostsError />
@@ -75,15 +67,19 @@ export const PostsListPage = () => {
         </div>
       )}
 
-      {status === fetchStatus.Loading ? (
-        <PostsLoader />
-      ) : (
-        total.current > page * pageLimit && (
-          <div className="btn-group my-2 mx-auto btn-group-lg d-flex justify-content-center w-25">
-            <Button onClick={handleNextPage}>Load more</Button>
-          </div>
-        )
-      )}
+      <div className="pagination">
+        <div className="btn-group my-2 mx-auto btn-group-lg">
+          {[...Array(9)].map((_, index) => (
+            <Button
+              disabled={index + 1 === page}
+              onClick={() => handleChangePage(index + 1)}
+              key={index}
+            >
+              {index + 1}
+            </Button>
+          ))}
+        </div>
+      </div>
     </>
   );
 };
