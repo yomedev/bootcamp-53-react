@@ -31,7 +31,7 @@ export const Modal = ({ children, onCloseModal }) => {
 
   const jsx = (
     <>
-      <div onKey className="modal-backdrop fade show" />
+      <div className="modal-backdrop fade show" />
 
       <div
         className="modal fade show"

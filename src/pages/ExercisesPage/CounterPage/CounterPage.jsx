@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 const PHONE_LOCAL_STORAGE_KEY = "phone";
 
 const getLocalData = (initialData, key) => {
-  console.log("getLocalData");
   const localData = JSON.parse(localStorage.getItem(PHONE_LOCAL_STORAGE_KEY));
   if (localData && localData[key]) {
     return localData[key];
@@ -11,12 +10,12 @@ const getLocalData = (initialData, key) => {
   return initialData;
 };
 
-export const CounterPage = ({ defaultAndroid }) => {
+export const CounterPage = () => {
   const [android, setAndroid] = useState(() =>
-    getLocalData(defaultAndroid, "android")
+    getLocalData(0, "android")
   );
   const [iphone, setIphone] = useState(() =>
-  getLocalData(defaultAndroid, "iphone"));
+  getLocalData(0, "iphone"));
 
   useEffect(() => {
     localStorage.setItem(
@@ -25,7 +24,6 @@ export const CounterPage = ({ defaultAndroid }) => {
     );
   }, [android, iphone]);
 
-  console.log(defaultAndroid);
 
   const handleUpdateAndroid = () => {
     setAndroid((prev) => prev + 1);
