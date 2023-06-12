@@ -1,14 +1,13 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { FiPlus } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchInput } from "../../components/Users/SearchInput";
 import { UsersList } from "../../components/Users/UsersList";
 import { Modal } from "../../components/Modal";
 import { NewUserForm } from "../../components/Users/NewUserForm";
-import { DELETE_USER } from "../../redux/types";
-import { deleteUserAction } from "../../redux/actions";
+import { deleteUserAction, createNewUserAction, toggleModalAction, changeSearchAction } from "../../redux/users/usersSlice";
 
-const LOCAL_STORAGE_USERS_KEY = "users";
+// const LOCAL_STORAGE_USERS_KEY = "users";
 
 // const getLocalUsers = () => {
 //   const localData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_USERS_KEY));
@@ -27,39 +26,26 @@ export const UsersPage = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_USERS_KEY, JSON.stringify(users));
-  }, [users]);
-
   const handleDeleteUser = (id) => {
-    // const action = { type: DELETE_USER, payload: id };
-    // dispatch(action);
-
-    dispatch(deleteUserAction(id))
+    dispatch(deleteUserAction(id));
   };
 
   const handleCreateNewUser = (user) => {
-    const action = {
-      type: "CREATE_USER",
-      payload: { ...user, id: Date.now() },
-    };
-    dispatch(action);
+    dispatch(createNewUserAction(user));
   };
 
   const toggleModal = () => {
-    const action = { type: "TOGGLE_MODAL" };
-    dispatch(action);
+    dispatch(toggleModalAction());
   };
 
   const handleChangeSearch = (event) => {
     const { value } = event.target;
-    const action = { type: "CHANGE_SEARCH", payload: value };
-    dispatch(action);
+    dispatch(changeSearchAction(value));
   };
 
   const handleResetSearch = () => {
-    const action = { type: "CHANGE_SEARCH", payload: "" };
-    dispatch(action);
+    const emptyString = "";
+    dispatch(changeSearchAction(emptyString));
   };
 
   const filteredUsers = useMemo(() => {
