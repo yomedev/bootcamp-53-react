@@ -1,36 +1,26 @@
-import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { androidAction, iphoneAction } from "../../../redux/counter/counterActions";
 
-const PHONE_LOCAL_STORAGE_KEY = "phone";
+// const PHONE_LOCAL_STORAGE_KEY = "phone";
 
-const getLocalData = (initialData, key) => {
-  const localData = JSON.parse(localStorage.getItem(PHONE_LOCAL_STORAGE_KEY));
-  if (localData && localData[key]) {
-    return localData[key];
-  }
-  return initialData;
-};
+// const getLocalData = (initialData, key) => {
+//   const localData = JSON.parse(localStorage.getItem(PHONE_LOCAL_STORAGE_KEY));
+//   if (localData && localData[key]) {
+//     return localData[key];
+//   }
+//   return initialData;
+// };
 
 export const CounterPage = () => {
-  const [android, setAndroid] = useState(() =>
-    getLocalData(0, "android")
-  );
-  const [iphone, setIphone] = useState(() =>
-  getLocalData(0, "iphone"));
-
-  useEffect(() => {
-    localStorage.setItem(
-      PHONE_LOCAL_STORAGE_KEY,
-      JSON.stringify({ android, iphone })
-    );
-  }, [android, iphone]);
-
+ const {android, iphone} = useSelector(state => state.counter)
+ const dispatch = useDispatch()
 
   const handleUpdateAndroid = () => {
-    setAndroid((prev) => prev + 1);
+    dispatch(androidAction())
   };
 
   const handleUpdateIphone = () => {
-    setIphone((prev) => prev + 1); 
+    dispatch(iphoneAction())
   };
 
   return (
