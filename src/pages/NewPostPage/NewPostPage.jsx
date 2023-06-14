@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { Loader } from "../../components/Loader";
 import { getPostInfo } from "./helpers";
 import { createPostService } from "../../services/postsServices";
+import { useDispatch, useSelector } from "react-redux";
+import { createPostThunk } from "../../redux/posts/postsThunk";
 
 const { title, content, author, urlToImage, publishedAt } = getPostInfo();
 
@@ -18,8 +20,8 @@ const initialState = {
 
 export const NewPostPage = () => {
 
-
-  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch()
+  const isLoading = useSelector((state) => state.posts.isLoading)
   const [form, setForm] = useState(() => getPostInfo());
 
   const handleChange = (event) => {
@@ -37,8 +39,7 @@ export const NewPostPage = () => {
       toast.error("Fill all required fields!");
       return;
     }
-    createPostService(form).then(() => toast.success('!')).catch(() => toast.error('?'))
-    setIsLoading(true);
+    dispatch(createPostThunk(form))
   };
 
   return (

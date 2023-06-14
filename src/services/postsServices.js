@@ -35,6 +35,7 @@ const postsApi = axios.create({
 });
 
 export const getPostsService = async () => {
+  // throw new Error()
   const { data } = await postsApi.get("");
 
   return data;

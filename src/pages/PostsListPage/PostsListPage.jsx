@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { Button } from "../../components/Button";
@@ -7,7 +7,9 @@ import { PostsItem } from "../../components/Posts";
 import { PostsLoader } from "../../components/Posts";
 import { PostsSearch } from "../../components/Posts";
 import { PostsError } from "../../components/Posts";
-import { getPostsService } from "../../services/postsServices";
+// import { getPostsService } from "../../services/postsServices";
+import { useDispatch, useSelector } from "react-redux";
+import { getPostsThunk } from "../../redux/posts/postsThunk";
 
 const fetchStatus = {
   Idle: "idle",
@@ -17,8 +19,11 @@ const fetchStatus = {
 };
 
 export const PostsListPage = () => {
-  const [posts, setPosts] = useState([]);
-  const [status, setStatus] = useState(fetchStatus.Idle);
+  // const [posts, setPosts] = useState([]);
+  // const [status, setStatus] = useState(fetchStatus.Idle);
+  const {items: posts, status} = useSelector((state) => state.posts)
+
+  const dispatch = useDispatch()
 
   const [searchParams, setSearchParams] = useSearchParams();
   // const search = searchParams.get("query");
@@ -26,20 +31,21 @@ export const PostsListPage = () => {
   
   const params = Object.fromEntries([...searchParams]);
 
-  const fetchPosts = useCallback(async () => {
-    setStatus(fetchStatus.Loading);
-    try {
-      const postsResponse = await getPostsService();
-      setPosts(postsResponse);
-      setStatus(fetchStatus.Success);
-    } catch (err) {
-      setStatus(fetchStatus.Error);
-    }
-  }, []);
+  // const fetchPosts = useCallback(async () => {
+  //   setStatus(fetchStatus.Loading);
+  //   try {
+  //     const postsResponse = await getPostsService();
+  //     setPosts(postsResponse);
+  //     setStatus(fetchStatus.Success);
+  //   } catch (err) {
+  //     setStatus(fetchStatus.Error);
+  //   }
+  // }, []);
 
   useEffect(() => {
-    fetchPosts();
-  }, [fetchPosts]);
+    // fetchPosts();
+    dispatch(getPostsThunk())
+  }, [dispatch]);
 
   const handleChangePage = (page) => {
     setSearchParams({ ...params, page });
