@@ -38,7 +38,7 @@ export const PostsItem = ({post}) => {
               Delete post
             </button>
 
-            <Link to={`/posts/${post.title}`} state={location} className="btn btn-primary ms-3">
+            <Link to={`/posts/${post.id}`} state={location} className="btn btn-primary ms-3">
               Read post
             </Link>
           </div>}

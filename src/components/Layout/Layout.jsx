@@ -18,6 +18,7 @@ export const Layout = () => {
     }
     alert("Password is incorrect");
   };
+
   return (
     <>
       <AuthContext.Provider value={{ isAuth, login, username }}>

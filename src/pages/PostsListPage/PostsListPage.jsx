@@ -7,7 +7,7 @@ import { PostsItem } from "../../components/Posts";
 import { PostsLoader } from "../../components/Posts";
 import { PostsSearch } from "../../components/Posts";
 import { PostsError } from "../../components/Posts";
-import { getPosts } from "../../services/postsServices";
+import { getPostsService } from "../../services/postsServices";
 
 const fetchStatus = {
   Idle: "idle",
@@ -19,11 +19,9 @@ const fetchStatus = {
 export const PostsListPage = () => {
   const [posts, setPosts] = useState([]);
   const [status, setStatus] = useState(fetchStatus.Idle);
-  // const [search, setSearch] = useState("");
-  // const [page, setPage] = useState(1);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const search = searchParams.get("query");
+  // const search = searchParams.get("query");
   const page = searchParams.get("page");
   
   const params = Object.fromEntries([...searchParams]);
@@ -31,13 +29,13 @@ export const PostsListPage = () => {
   const fetchPosts = useCallback(async () => {
     setStatus(fetchStatus.Loading);
     try {
-      const postsResponse = await getPosts({ page, search });
-      setPosts(postsResponse.articles);
+      const postsResponse = await getPostsService();
+      setPosts(postsResponse);
       setStatus(fetchStatus.Success);
     } catch (err) {
       setStatus(fetchStatus.Error);
     }
-  }, [page, search]);
+  }, []);
 
   useEffect(() => {
     fetchPosts();

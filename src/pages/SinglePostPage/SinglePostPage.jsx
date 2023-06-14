@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import { Loader } from "../../components/Loader";
-import { getSingePostService } from "../../services/postsServices";
+import { getSinglePostService } from "../../services/postsServices";
 import { Link, useLocation, useParams, Outlet } from "react-router-dom";
 
 export const SinglePostPage = () => {
@@ -20,7 +20,7 @@ export const SinglePostPage = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    getSingePostService(postId)
+    getSinglePostService(postId)
       .then(setPost)
       .catch(() => {
         toast.error("Something went wrong!");
