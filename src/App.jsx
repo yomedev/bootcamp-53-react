@@ -12,7 +12,8 @@ import { NotFoundPage } from "./pages/NotFoundPage/NotFoundPage";
 import { SinglePostPage } from "./pages/SinglePostPage/SinglePostPage";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { CommentsPage } from "./pages/SinglePostPage/CommentsPage/CommentsPage";
-import { UsersPage } from "./pages/UsersPage/UsersPage";
+import { UsersPage } from "./pages/ExercisesPage/UsersPage/UsersPage";
+import { NewPostPage } from "./pages/NewPostPage/NewPostPage";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const PostsListPage = lazy(() => import("./pages/PostsListPage"));
@@ -24,25 +25,26 @@ export const App = () => {
   return (
     // <BrowserRouter basename="/my-repository/">
     <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="*" element={<NotFoundPage />} />
-            {/* <Route path="*" element={<Navigate to='/' />} /> */}
-            <Route index element={<HomePage />} />
-            <Route path="posts" element={<PostsListPage />} />
-            <Route path="posts/:postId" element={<SinglePostPage />}>
-              <Route path="comments" element={<CommentsPage />} />
-            </Route>
-            <Route path="exercises" element={<ExercisesPage />}>
-              <Route index element={<Navigate to="counter" />} />
-              <Route path="counter" element={<CounterPage />} />
-              <Route path="users" element={<UsersPage />} />
-              <Route path="timer" element={<TimerPage />} />
-              <Route path="re-render" element={<RerenderPage />} />
-            </Route>
-            <Route path="login" element={<LoginPage />} />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="*" element={<NotFoundPage />} />
+          {/* <Route path="*" element={<Navigate to='/' />} /> */}
+          <Route index element={<HomePage />} />
+          <Route path="posts" element={<PostsListPage />} />
+          <Route path='new-post' element={<NewPostPage />} />
+          <Route path="posts/:postId" element={<SinglePostPage />}>
+            <Route path="comments" element={<CommentsPage />} />
           </Route>
-        </Routes>
+          <Route path="exercises" element={<ExercisesPage />}>
+            <Route index element={<Navigate to="counter" />} />
+            <Route path="counter" element={<CounterPage />} />
+            <Route path="users" element={<UsersPage />} />
+            <Route path="timer" element={<TimerPage />} />
+            <Route path="re-render" element={<RerenderPage />} />
+          </Route>
+          <Route path="login" element={<LoginPage />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 };

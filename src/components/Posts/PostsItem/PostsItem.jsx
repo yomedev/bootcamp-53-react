@@ -5,10 +5,14 @@ import { cutString } from '../../../helpers/cut-string';
 import { useContext } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { deletePostThunk } from '../../../redux/posts/postsThunk';
 
 
 export const PostsItem = ({post}) => {
   const {isAuth} = useContext(AuthContext)
+
+  const dispatch = useDispatch()
 
   const location = useLocation()
 
@@ -34,11 +38,11 @@ export const PostsItem = ({post}) => {
           </ul>
 
           {isAuth && <div className="d-flex">
-            <button type="button" className="btn btn-danger">
+            <button type="button" className="btn btn-danger" onClick={() => dispatch(deletePostThunk(post.id))}>
               Delete post
             </button>
 
-            <Link to={`/posts/${post.title}`} state={location} className="btn btn-primary ms-3">
+            <Link to={`/posts/${post.id}`} state={location} className="btn btn-primary ms-3">
               Read post
             </Link>
           </div>}

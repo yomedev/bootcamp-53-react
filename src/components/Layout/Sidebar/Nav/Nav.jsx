@@ -25,6 +25,15 @@ export const Nav = () => {
           Posts list
         </NavLink>
         <NavLink
+          to="/new-post"
+          style={{ textAlign: "left", marginLeft: "-10px" }}
+          className={({ isActive }) =>
+            isActive ? "btn btn-primary" : "btn btn-light"
+          }
+        >
+          Create new post
+        </NavLink>
+        <NavLink
           to="/exercises"
           style={{ textAlign: "left", marginLeft: "-10px" }}
           className={({ isActive }) =>
