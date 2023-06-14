@@ -1,12 +1,11 @@
 import { useEffect, useMemo } from "react";
 import { FiPlus } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { SearchInput } from "../../components/Users/SearchInput";
-import { UsersList } from "../../components/Users/UsersList";
-import { Modal } from "../../components/Modal";
-import { NewUserForm } from "../../components/Users/NewUserForm";
-import { DELETE_USER } from "../../redux/types";
-import { deleteUserAction } from "../../redux/actions";
+import { SearchInput } from "../../../components/Users/SearchInput";
+import { UsersList } from "../../../components/Users/UsersList";
+import { Modal } from "../../../components/Modal";
+import { NewUserForm } from "../../../components/Users/NewUserForm";
+import { deleteUserAction } from "../../../redux/actions";
 
 const LOCAL_STORAGE_USERS_KEY = "users";
 

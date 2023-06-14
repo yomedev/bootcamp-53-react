@@ -12,7 +12,8 @@ import { NotFoundPage } from "./pages/NotFoundPage/NotFoundPage";
 import { SinglePostPage } from "./pages/SinglePostPage/SinglePostPage";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { CommentsPage } from "./pages/SinglePostPage/CommentsPage/CommentsPage";
-import { UsersPage } from "./pages/UsersPage/UsersPage";
+import { UsersPage } from "./pages/ExercisesPage/UsersPage/UsersPage";
+import { MiddlewarePage } from "./pages/ExercisesPage/MiddlewarePage/MiddlewarePage";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const PostsListPage = lazy(() => import("./pages/PostsListPage"));
@@ -39,6 +40,7 @@ export const App = () => {
               <Route path="users" element={<UsersPage />} />
               <Route path="timer" element={<TimerPage />} />
               <Route path="re-render" element={<RerenderPage />} />
+              <Route path="middleware" element={<MiddlewarePage />} />
             </Route>
             <Route path="login" element={<LoginPage />} />
           </Route>

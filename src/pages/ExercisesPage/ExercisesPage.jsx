@@ -6,6 +6,7 @@ const subPages = [
   { href: "users", title: "Users" },
   { href: "timer", title: "Timer" },
   { href: "re-render", title: "Re-render" },
+  { href: "middleware", title: "Middleware" },
 ];
 
 export const ExercisesPage = () => {
