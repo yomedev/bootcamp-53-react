@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { FiPlus } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchInput } from "../../../components/Users/SearchInput";
@@ -11,71 +10,58 @@ import {
   toggleModalAction,
   changeSearchAction,
 } from "../../../redux/users/usersSlice";
-
-// const LOCAL_STORAGE_USERS_KEY = "users";
-
-// const getLocalUsers = () => {
-//   const localData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_USERS_KEY));
-//   if (localData && localData) {
-//     return localData;
-//   }
-//   return usersJson;
-// };
+import {
+  selectFilteredUsers,
+  selectOpenToWorkTotal,
+  selectUsersIsModalOpen,
+} from "../../../redux/users/usersSelectors";
 
 export const UsersPage = () => {
-  const {
-    items: users,
-    search,
-    isModalOpen,
-  } = useSelector((state) => state.users);
+  // const users = useSelector((state) => {
+  //   console.log("select");
+  //   return state.users.items;
+  // });
+  const isModalOpen = useSelector(selectUsersIsModalOpen);
 
   const dispatch = useDispatch();
 
-  const handleDeleteUser = (id) => {
-    dispatch(deleteUserAction(id));
-  };
+  const handleDeleteUser = (id) => dispatch(deleteUserAction(id));
 
-  const handleCreateNewUser = (user) => {
-    dispatch(createNewUserAction(user));
-  };
+  const handleCreateNewUser = (user) => dispatch(createNewUserAction(user));
 
-  const toggleModal = () => {
-    dispatch(toggleModalAction());
-  };
+  const toggleModal = () => dispatch(toggleModalAction());
 
   const handleChangeSearch = (event) => {
-    const { value } = event.target;
-    dispatch(changeSearchAction(value));
+    dispatch(changeSearchAction(event.target.value));
   };
 
-  const handleResetSearch = () => {
-    const emptyString = "";
-    dispatch(changeSearchAction(emptyString));
-  };
+  const handleResetSearch = () => dispatch(changeSearchAction(""));
 
-  const filteredUsers = useMemo(() => {
-    return users.filter((user) =>
-      user.name.toLowerCase().trim().includes(search.toLowerCase().trim())
-    );
-  }, [search, users]);
+  // const users = useSelector(selectUsersData);
+  // const search = useSelector(selectUsersSearch);
+
+  const filteredUsers = useSelector(selectFilteredUsers);
+
+  const openToWorkTotal = useSelector(selectOpenToWorkTotal);
 
   return (
     <>
       <div className="d-flex align-items-center mb-5">
         <button
           type="button"
-          className="btn btn-primary btn-lg ms-auto"
+          className="btn btn-primary btn-lg"
           onClick={toggleModal}
         >
-          <FiPlus />
+          Add new user <FiPlus />
         </button>
       </div>
 
       <SearchInput
-        search={search}
         onChangeSearch={handleChangeSearch}
         onResetSearch={handleResetSearch}
       />
+
+      <p>Open to work users: {openToWorkTotal}</p>
 
       {isModalOpen && (
         <Modal onCloseModal={toggleModal}>
