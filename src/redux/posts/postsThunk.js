@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createPostService, deletePostService, getPostsService } from "../../services/postsServices";
+import { createNewPostService, deletePostService, getPostsService } from "../../services/postsServices";
 
 // const getPostsThunk = () => async (dispatch) => {
 //   dispatch({ type: "pending" });
@@ -20,9 +20,9 @@ export const getPostsThunk = createAsyncThunk("getPosts", async (_, thunkApi) =>
 });
 
 export const createPostThunk = createAsyncThunk("createPost", (body, thunkApi) => {
-  return createPostService(body);
+  return createNewPostService(body);
 });
 
-export const deletePostThunk = createAsyncThunk("deletePost", (id, thunkApi) => {
-  return deletePostService(id);
+export const deletePostThunk = createAsyncThunk("deletePost", ({postId}, thunkApi) => {
+  return deletePostService(postId);
 });
