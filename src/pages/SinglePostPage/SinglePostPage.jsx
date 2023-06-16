@@ -1,18 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { toast } from "react-toastify";
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import { Loader } from "../../components/Loader";
-import { getSinglePostService } from "../../services/postsServices";
-import { Link, useLocation, useParams, Outlet } from "react-router-dom";
+import { Loader } from '../../components/Loader';
+import { getSinglePostService } from '../../services/postsServices';
 
 export const SinglePostPage = () => {
   const { postId } = useParams();
-  console.log(postId);
 
-  const location = useLocation()
+  const location = useLocation();
+  const isPostCreated = location.state?.isPostCreated ?? false;
 
-  console.log(location.state);
+  useEffect(() => {
+    if (isPostCreated) {
+      toast.success('Post created successfully')
+    }
+  }, [isPostCreated]);
 
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +27,7 @@ export const SinglePostPage = () => {
     getSinglePostService(postId)
       .then(setPost)
       .catch(() => {
-        toast.error("Something went wrong!");
+        toast.error('Something went wrong!');
       })
       .finally(() => setIsLoading(false));
   }, [postId]);
@@ -35,22 +39,28 @@ export const SinglePostPage = () => {
   return (
     post && (
       <>
-        <Link to={location.state ?? '/posts'} className="btn btn-primary my-3">
+        <Link to={location.state?.from ?? '/posts'} className="btn btn-primary mb-5">
           Back
         </Link>
+
         <img
-          src={post.urlToImage}
+          src={post.image}
           alt={post.title}
           className="img-fluid mb-4"
-          style={{ maxHeight: "600px", width: "100%", objectFit: "cover" }}
+          style={{ maxHeight: '600px', width: '100%', objectFit: 'cover' }}
         />
         <h1 className="mb-5">{post.title}</h1>
 
-        <div>{post.description}</div>
+        <div dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br/>') }} />
 
-        <Link to={`/posts/${postId}/comments`} state={location.state} className="btn btn-primary my-4">
+        <Link
+          to={`/posts/${postId}/comments`}
+          state={location.state?.from ? location.state : null} // { from: location } -> { location }
+          className="btn btn-primary my-4"
+        >
           Vew post comments
         </Link>
+
         <Outlet />
       </>
     )

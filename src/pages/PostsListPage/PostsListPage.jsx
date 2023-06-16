@@ -7,7 +7,6 @@ import { PostsItem } from "../../components/Posts";
 import { PostsLoader } from "../../components/Posts";
 import { PostsSearch } from "../../components/Posts";
 import { PostsError } from "../../components/Posts";
-// import { getPostsService } from "../../services/postsServices";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostsThunk } from "../../redux/posts/postsThunk";
 
@@ -19,8 +18,6 @@ const fetchStatus = {
 };
 
 export const PostsListPage = () => {
-  // const [posts, setPosts] = useState([]);
-  // const [status, setStatus] = useState(fetchStatus.Idle);
   const {items: posts, status} = useSelector((state) => state.posts)
 
   const dispatch = useDispatch()
@@ -31,19 +28,7 @@ export const PostsListPage = () => {
   
   const params = Object.fromEntries([...searchParams]);
 
-  // const fetchPosts = useCallback(async () => {
-  //   setStatus(fetchStatus.Loading);
-  //   try {
-  //     const postsResponse = await getPostsService();
-  //     setPosts(postsResponse);
-  //     setStatus(fetchStatus.Success);
-  //   } catch (err) {
-  //     setStatus(fetchStatus.Error);
-  //   }
-  // }, []);
-
   useEffect(() => {
-    // fetchPosts();
     dispatch(getPostsThunk())
   }, [dispatch]);
 
@@ -64,7 +49,7 @@ export const PostsListPage = () => {
       ) : (
         <div className="container-fluid g-0">
           <div className="row">
-            {posts?.map((post) => (
+            {posts.data?.map((post) => (
               <PostsItem key={post.url} post={post} />
             ))}
           </div>

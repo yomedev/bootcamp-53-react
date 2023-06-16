@@ -1,11 +1,16 @@
 import { NavLink } from "react-router-dom";
 import { Button } from "../../../Button";
+import { UserCard } from "../../../UserCard/UserCard";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../../../../redux/auth/authSlice";
 
-export const Nav = () => {
+export const UserNav = () => {
+  const dispatch = useDispatch();
   return (
     <div className="d-flex flex-column justify-content-between h-100">
       <div className="d-flex flex-column justify-content-between">
         <h2 className="h3 mb-4">Welcome back!</h2>
+        <UserCard />
         <NavLink
           to="/"
           style={{ textAlign: "left", marginLeft: "-10px" }}
@@ -42,18 +47,14 @@ export const Nav = () => {
         >
           React Exercises
         </NavLink>
-        <NavLink
-          to="/login"
-          style={{ textAlign: "left", marginLeft: "-10px" }}
-          className={({ isActive }) =>
-            isActive ? "btn btn-primary" : "btn btn-light"
-          }
-        >
-          Log in
-        </NavLink>
       </div>
 
-      <Button className="btn-danger mt-auto">Log Out</Button>
+      <Button
+        onClick={() => dispatch(logoutAction())}
+        className="btn-danger mt-auto"
+      >
+        Log Out
+      </Button>
     </div>
   );
 };
