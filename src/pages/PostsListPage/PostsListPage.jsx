@@ -50,7 +50,7 @@ export const PostsListPage = () => {
         <div className="container-fluid g-0">
           <div className="row">
             {posts.data?.map((post) => (
-              <PostsItem key={post.url} post={post} />
+              <PostsItem key={post.id} post={post} />
             ))}
           </div>
         </div>

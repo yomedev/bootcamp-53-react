@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { loginThunk } from "../../redux/auth/authThunk";
 import { toast } from "react-toastify";
 
@@ -12,8 +12,6 @@ export const LoginPage = () => {
     email: "",
     password: "",
   });
-
-  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -26,7 +24,7 @@ export const LoginPage = () => {
     event.preventDefault();
     try {
       await dispatch(loginThunk(values)).unwrap()
-      navigate("/posts", { replace: true });
+      // navigate("/posts", { replace: true });
     } catch (error) {
       toast.error(error.message)
     }

@@ -1,4 +1,18 @@
+import { useSelector } from "react-redux";
+import { selectProfileInfo } from "../../redux/profile/profileSelect";
+import { fetchStatus } from "../../constants/fetchStatus";
+
 export const UserCard = () => {
+  const { data, status } = useSelector(selectProfileInfo);
+  console.log(data);
+
+  if (status === fetchStatus.Loading || status === fetchStatus.Idle) {
+    return <p>Loading...</p>;
+  }
+
+  if (status === fetchStatus.Error) {
+    return <p>Error</p>;
+  }
 
   return (
     <div className="list-group-item list-group-item-action py-3 mb-4">
@@ -8,14 +22,14 @@ export const UserCard = () => {
           width="80px"
           height="80px"
           className="d-block"
-          src={'/user.png'}
-          style={{ borderRadius: '50%', boxSizing: 'border-box' }}
+          src={data.avatar || "/user.png"}
+          style={{ borderRadius: "50%", boxSizing: "border-box" }}
         />
         <div className="ms-3 d-flex flex-column">
           <strong className="mb-1">
-            {'First'} {'Last'}
+            {data.first_name} {data.last_name}
           </strong>
-          <small className="text-muted">{'Email'}</small>
+          <small className="text-muted">{data.email}</small>
         </div>
       </div>
     </div>

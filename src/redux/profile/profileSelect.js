@@ -1,0 +1,1 @@
+export const selectProfileInfo = (state) => state.profile
