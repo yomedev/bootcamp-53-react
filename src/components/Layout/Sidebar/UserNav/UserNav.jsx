@@ -3,9 +3,16 @@ import { Button } from "../../../Button";
 import { UserCard } from "../../../UserCard/UserCard";
 import { useDispatch } from "react-redux";
 import { logoutAction } from "../../../../redux/auth/authSlice";
+import { token } from "../../../../http";
 
 export const UserNav = () => {
   const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutAction())
+    token.unset()
+  }
+  
   return (
     <div className="d-flex flex-column justify-content-between h-100">
       <div className="d-flex flex-column justify-content-between">
@@ -50,7 +57,7 @@ export const UserNav = () => {
       </div>
 
       <Button
-        onClick={() => dispatch(logoutAction())}
+        onClick={handleLogout}
         className="btn-danger mt-auto"
       >
         Log Out

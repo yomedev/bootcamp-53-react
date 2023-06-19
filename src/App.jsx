@@ -19,6 +19,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProfileThunk } from "./redux/profile/profileThunk";
 import { selectAuthStatus } from "./redux/auth/authSelect";
 import { fetchStatus } from "./constants/fetchStatus";
+import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
+import { PublicRoute } from "./components/PublicRoute/PublicRoute";
 // import { token } from "./http";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -54,19 +56,25 @@ export const App = () => {
           {/* <Route path="*" element={<Navigate to='/' />} /> */}
           <Route index element={<HomePage />} />
           <Route path="posts" element={<PostsListPage />} />
-          <Route path="new-post" element={<NewPostPage />} />
           <Route path="posts/:postId" element={<SinglePostPage />}>
             <Route path="comments" element={<CommentsPage />} />
           </Route>
-          <Route path="exercises" element={<ExercisesPage />}>
-            <Route index element={<Navigate to="counter" />} />
-            <Route path="counter" element={<CounterPage />} />
-            <Route path="users" element={<UsersPage />} />
-            <Route path="timer" element={<TimerPage />} />
-            <Route path="re-render" element={<RerenderPage />} />
+
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="new-post" element={<NewPostPage />} />
+            <Route path="exercises" element={<ExercisesPage />}>
+              <Route index element={<Navigate to="counter" />} />
+              <Route path="counter" element={<CounterPage />} />
+              <Route path="users" element={<UsersPage />} />
+              <Route path="timer" element={<TimerPage />} />
+              <Route path="re-render" element={<RerenderPage />} />
+            </Route>
           </Route>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="join" element={<JoinPage />} />
+
+          <Route path="/" element={<PublicRoute />}>
+            <Route path="login" element={<LoginPage />} />
+            <Route path="join" element={<JoinPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
